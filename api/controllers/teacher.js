@@ -8,6 +8,11 @@ exports.teacher_access = async (req, res, next) => {
     User.findOne({ phone: req.body.phone })
         .then(checkUser => {
             if (checkUser) {
+                /*
+                 *=================
+                 * TEACHERE ALREADY EXIST
+                 *=================
+                 */
                 bcrypt.compare(req.body.password, checkUser.password, (err, result) => {
                     if (err) {
                         return res.status(401).json({
@@ -62,7 +67,7 @@ exports.teacher_access = async (req, res, next) => {
                                         expiresIn: "24h"
                                     }
                                 );
-                                return res.status(200).json({
+                                return res.status(201).json({
                                     message: "Auth successful",
                                     token: token,
                                     Id: result._id,
