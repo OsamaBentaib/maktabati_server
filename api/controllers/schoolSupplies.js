@@ -34,6 +34,10 @@ exports.schoolSupplies_get = async (req, res, next) => {
                             error: err,
                         });
                     })
+            } else {
+                return res.status(204).json({
+                    message: "No teacher data",
+                });
             }
         })
         .catch(err => {
