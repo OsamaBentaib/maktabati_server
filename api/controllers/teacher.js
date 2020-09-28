@@ -56,7 +56,7 @@ exports.teacher_access = async (req, res, next) => {
                             joinedAt: new Date().toISOString(),
                         });
                         newTeacher.save()
-                            .then(result => { 
+                            .then(result => {
                                 const token = jwt.sign(
                                     {
                                         phone: result.phone,
@@ -102,11 +102,12 @@ exports.teachers_create_teacherData = async (req, res, next) => {
     }
     const city = req.body.city;
     const school = req.body.school;
-    Teacher.findById(req.Id)
+    const teacher = req.body.teacher;
+    Teacher.findById(teacher)
         .then(checkUser => {
             if (checkUser) {
                 const teacherData = new TeacherData({
-                    teacher: req.Id,
+                    teacher: teacher,
                     city: city,
                     school: school,
                 });
