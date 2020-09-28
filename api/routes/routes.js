@@ -35,7 +35,7 @@ const checkAuth = require('../middleware/check-auth');
  *   TEACHER ROUTES
  * ===================
  */
-router.post("/teacher-access/", checkAuth, teacherController.teacher_access);
+router.post("/teacher-access/", teacherController.teacher_access);
 
 router.post("/teacher-create/", checkAuth, teacherController.teachers_create_teacherData);
 
@@ -44,6 +44,8 @@ router.post("/teacher-create/", checkAuth, teacherController.teachers_create_tea
  *   SCHOOL SUPPLIES ROUTES
  * ===================
  */
+router.get("/school-supplies/", checkAuth, schoolSuppliesController.schoolSupplies_get);
+
 router.post("/school-supplies/", checkAuth, schoolSuppliesController.schoolSupplies_create_one);
 
 router.delete("/school-supplies/:Id/", checkAuth, schoolSuppliesController.schoolSupplies_delete_one);

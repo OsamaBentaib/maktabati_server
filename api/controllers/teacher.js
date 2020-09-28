@@ -5,7 +5,7 @@ const Teacher = require("../models/teacher");
 const TeacherData = require("../models/teacherData");
 
 exports.teacher_access = async (req, res, next) => {
-    User.findOne({ phone: req.body.phone })
+    Teacher.findOne({ phone: req.body.phone })
         .then(checkUser => {
             if (checkUser) {
                 /*
@@ -35,7 +35,7 @@ exports.teacher_access = async (req, res, next) => {
                             message: "Auth successful",
                             token: token,
                             _id: checkUser._id,
-                            phone: result.phone
+                            phone: checkUser.phone
                         });
                     }
                     res.status(401).json({
@@ -50,9 +50,11 @@ exports.teacher_access = async (req, res, next) => {
                             error: err
                         });
                     } else {
+                        console.log("password ++++++++" + hash);
                         const newTeacher = new Teacher({
                             phone: req.body.phone,
-                            password: hash
+                            password: hash,
+                            joinedAt: new Date().toISOString(),
                         });
                         newTeacher.save()
                             .then(result => {
@@ -70,7 +72,7 @@ exports.teacher_access = async (req, res, next) => {
                                 return res.status(201).json({
                                     message: "Auth successful",
                                     token: token,
-                                    Id: result._id,
+                                    _id: result._id,
                                     phone: result.phone
                                 });
                             })
@@ -94,19 +96,38 @@ exports.teacher_access = async (req, res, next) => {
 };
 
 exports.teachers_create_teacherData = async (req, res, next) => {
-    const teacher = req.body.teacher;
+    if (!req.isAuth) {
+        return res.status(500).json({
+            error: "UnAuthoooooo!",
+        });
+    }
     const city = req.body.city;
     const school = req.body.school;
-    const teacherData = new TeacherData({
-        teacher: teacher,
-        city: city,
-        school: school,
-    });
-    teacherData.save()
-        .then(result => {
-            return res.status(201).json({
-                message: "added successfully",
-                teacher: result,
+    Teacher.findById(req.Id)
+        .then(checkUser => {
+            if (checkUser) {
+                const teacherData = new TeacherData({
+                    teacher: req.Id,
+                    city: city,
+                    school: school,
+                });
+                teacherData.save()
+                    .then(result => {
+                        return res.status(201).json({
+                            message: "added successfully",
+                            teacher: result,
+                        });
+                    });
+            } else {
+                return res.status(204).json({
+                    error: "No teacher",
+                });
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json({
+                error: err,
             });
-        });
+        })
 };

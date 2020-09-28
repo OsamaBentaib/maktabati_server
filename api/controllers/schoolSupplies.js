@@ -1,11 +1,47 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const School = require("../models/school");
 const SchoolSupplies = require("../models/schoolSupplies");
+const Teacher = require("../models/teacher");
 const Book = require("../models/book");
 const NoteBook = require("../models/noteBook");
 const NoteBookCover = require("../models/noteBookCover");
+const e = require("express");
+
+exports.schoolSupplies_get = async (req, res, next) => {
+    if (!req.isAuth) {
+        return res.status(401).json({
+            error: "Unauthorizated",
+        });
+    }
+    Teacher.findById(req.Id)
+        .then(X => {
+            if (X) {
+                SchoolSupplies.find({ teacher: X._id })
+                    .exec()
+                    .then(docs => {
+                        res.status(200).json({
+                            count: docs.length,
+                            orders: docs.map(doc => {
+                                return {
+                                    schoolSupplies: doc
+                                };
+                            })
+                        });
+                    })
+                    .catch(results => {
+                        return res.status(500).json({
+                            error: err,
+                        });
+                    })
+            }
+        })
+        .catch(err => {
+            return res.status(500).json({
+                error: "Something wrong!",
+            });
+        });
+};
 
 exports.schoolSupplies_create_one = async (req, res, next) => {
     if (!req.isAuth) {
@@ -13,50 +49,62 @@ exports.schoolSupplies_create_one = async (req, res, next) => {
             error: "Unauthorizated",
         });
     }
-    if (req.body.type === "Book" || req.body.type === "NoteBook" || req.body.type === "NoteBookCover") {
+    if (req.body.type === "Book") {
         const supplie = new SchoolSupplies({
             type: req.body.type,
             level: req.body.level,
-            teacher: req.Id
+            teacher: req.Id,
+            book: {
+                name: req.body.book.name
+            },
         });
         supplie.save()
             .then(result => {
-                if (req.body.type === "Book") {
-                    const book = new Book({
-                        name: req.body.book.name,
-                        schoolSupplies: result._id
-                    });
-                    book.save()
-                        .then(r => {
-                            return res.status(201).json({
-                                message: "book Saved!",
-                            });
-                        })
-                } else if (req.body.type === "NoteBook") {
-                    const noteBook = new NoteBook({
-                        size: req.body.noteBook.size,
-                        numberPages: req.body.noteBook.numberPages,
-                        schoolSupplies: result._id
-                    });
-                    noteBook.save()
-                        .then(r => {
-                            return res.status(201).json({
-                                message: "noteBook Saved!",
-                            });
-                        });
-                } else if (req.body.type === "NoteBookCover") {
-                    const noteBookCover = new NoteBookCover({
-                        size: req.body.noteBookCover.size,
-                        color: req.body.noteBook.color,
-                        schoolSupplies: result._id
-                    });
-                    noteBook.save()
-                        .then(r => {
-                            return res.status(201).json({
-                                message: "noteBookCover Saved!",
-                            });
-                        });
-                }
+                return res.status(201).json({
+                    message: "book Saved!",
+                });
+            })
+            .catch(err => {
+                return res.status(500).json({
+                    error: "Something wrong!",
+                });
+            });
+    } else if (req.body.type === "NoteBook") {
+        const supplie = new SchoolSupplies({
+            type: req.body.type,
+            level: req.body.level,
+            teacher: req.Id,
+            noteBook: {
+                size: req.body.noteBook.size,
+                numberPages: req.body.noteBook.numberPages
+            },
+        });
+        supplie.save()
+            .then(result => {
+                return res.status(201).json({
+                    message: "NoteBook Saved!",
+                });
+            })
+            .catch(err => {
+                return res.status(500).json({
+                    error: "Something wrong!",
+                });
+            });
+    } else if (req.body.type === "NoteBookCover") {
+        const supplie = new SchoolSupplies({
+            type: req.body.type,
+            level: req.body.level,
+            teacher: req.Id,
+            noteBookCover: {
+                size: req.body.noteBookCover.size,
+                color: req.body.noteBookCover.color
+            },
+        });
+        supplie.save()
+            .then(result => {
+                return res.status(201).json({
+                    message: "NoteBookCover Saved!",
+                });
             })
             .catch(err => {
                 return res.status(500).json({

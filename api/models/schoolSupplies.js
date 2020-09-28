@@ -12,7 +12,28 @@ const schoolSuppliesSchema = mongoose.Schema({
     teacher: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Teacher"
-    }
+    },
+    book: {
+        name: {
+            type: String,
+        }
+    },
+    noteBook: {
+        size: {
+            type: String,
+        },
+        numberPages: {
+            type: Number,
+        }
+    },
+    noteBookCover: {
+        size: {
+            type: String,
+        },
+        color: {
+            type: String,
+        }
+    },
 });
 
 module.exports = mongoose.model('SchoolSuplies', schoolSuppliesSchema);
