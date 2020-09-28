@@ -50,14 +50,13 @@ exports.teacher_access = async (req, res, next) => {
                             error: err
                         });
                     } else {
-                        console.log("password ++++++++" + hash);
                         const newTeacher = new Teacher({
                             phone: req.body.phone,
                             password: hash,
                             joinedAt: new Date().toISOString(),
                         });
                         newTeacher.save()
-                            .then(result => {
+                            .then(result => { 
                                 const token = jwt.sign(
                                     {
                                         phone: result.phone,

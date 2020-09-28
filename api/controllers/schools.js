@@ -35,7 +35,7 @@ exports.Schools_create_school = async (req, res, next) => {
     const school = req.body;
     const addSchool = new School({
         name: school.name,
-        type: school.typr,
+        type: school.type,
         city: school.city,
         addedAt: new Date().toISOString()
     });
