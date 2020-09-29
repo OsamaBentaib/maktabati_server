@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Parent = require("../models/parent");
-const Location = require("../models/location");
 
 exports.parents_get_all = async (req, res, next) => {
     const parents = await Parent.find();

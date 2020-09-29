@@ -3,9 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const SchoolSupplies = require("../models/schoolSupplies");
 const Teacher = require("../models/teacher");
-const Book = require("../models/book");
-const NoteBook = require("../models/noteBook");
-const NoteBookCover = require("../models/noteBookCover");
 const e = require("express");
 
 exports.schoolSupplies_get = async (req, res, next) => {

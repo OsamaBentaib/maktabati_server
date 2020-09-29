@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const SchoolTypes = require("../models/schoolTypes");
-const Level = require("../models/level");
 const TeacherData = require("../models/teacherData");
 
 exports.schoolTypes_get_all = async (req, res, next) => {

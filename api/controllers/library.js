@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Library = require("../models/library");
-const Location = require("../models/location");
 
 exports.libraries_get_all = async (req, res, next) => {
     const libraries = await Library.find();
