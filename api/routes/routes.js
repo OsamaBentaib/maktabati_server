@@ -68,7 +68,7 @@ router.get("/school-type/", schoolTypesController.schoolTypes_get_all);
 
 router.post("/school-type/", schoolTypesController.schoolTypes_create_schoolType);
 
-router.post("/school-type/teacher/", schoolTypesController.schoolTypes_get_teacher_level);
+router.get("/school-type/teacher/", schoolTypesController.schoolTypes_get_teacher_level);
 
 router.delete("/school-type/:Id/", schoolTypesController.schoolTypes_delete_schoolType);
 
