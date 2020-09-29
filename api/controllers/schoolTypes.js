@@ -7,25 +7,11 @@ const TeacherData = require("../models/teacherData");
 exports.schoolTypes_get_all = async (req, res, next) => {
     SchoolTypes.find()
         .then(result => {
+            console.log(result);
             if (result) {
-                Level.find()
-                    .then(levels => {
-                        return res.status(200).json({
-                            schoolTypes: result.map(doc => {
-                                return {
-                                    _id: doc._id,
-                                    type: doc.type,
-                                    addedAt: doc.addedAt,
-                                    levels: doc.levels
-                                }
-                            }),
-                        });
-                    })
-                    .catch(err => {
-                        return res.status(204).json({
-                            error: err,
-                        });
-                    })
+                return res.status(200).json({
+                    schoolTypes: result,
+                });
             } else {
                 return res.status(204).json({
                     message: "No data found!",
@@ -33,6 +19,8 @@ exports.schoolTypes_get_all = async (req, res, next) => {
             }
         })
         .catch(err => {
+            console.log(err);
+            console.log("err 2");
             return res.status(500).json({
                 error: err,
             });
@@ -45,7 +33,7 @@ exports.schoolTypes_get_teacher_level = async (req, res, next) => {
             error: "Unauutttt",
         });
     }
-    TeacherData.findOne({ teacher: req.Id })
+    TeacherData.findOne({ teacher: req.params.Id })
         .then(s => {
             console.log(s);
             if (s) {
