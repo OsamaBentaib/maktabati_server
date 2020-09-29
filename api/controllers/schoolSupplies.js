@@ -56,11 +56,8 @@ exports.schoolSupplies_get_teacher_supp = async (req, res, next) => {
         .then(docs => {
             res.status(200).json({
                 count: docs.length,
-                schoolSupplies: docs.map(doc => {
-                    return {
-                        schoolSupplies: doc
-                    };
-                })
+                schoolSupplies: docs,
+                teacher: req.params.Id
             });
         })
         .catch(err => {
@@ -79,7 +76,7 @@ exports.schoolSupplies_create_one = async (req, res, next) => {
         const supplie = new SchoolSupplies({
             type: req.body.type,
             level: req.body.level,
-            teacher: req.Id,
+            teacher: req.body.teacher,
             book: {
                 name: req.body.book.name
             },
@@ -99,7 +96,7 @@ exports.schoolSupplies_create_one = async (req, res, next) => {
         const supplie = new SchoolSupplies({
             type: req.body.type,
             level: req.body.level,
-            teacher: req.Id,
+            teacher: req.body.teacher,
             noteBook: {
                 size: req.body.noteBook.size,
                 numberPages: req.body.noteBook.numberPages
@@ -120,7 +117,7 @@ exports.schoolSupplies_create_one = async (req, res, next) => {
         const supplie = new SchoolSupplies({
             type: req.body.type,
             level: req.body.level,
-            teacher: req.Id,
+            teacher: req.body.teacher,
             noteBookCover: {
                 size: req.body.noteBookCover.size,
                 color: req.body.noteBookCover.color
