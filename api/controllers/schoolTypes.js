@@ -48,27 +48,36 @@ exports.schoolTypes_get_teacher_level = async (req, res, next) => {
     TeacherData.findOne({ teacher: req.Id })
         .then(s => {
             console.log(s);
-            console.log(s.school);
-            SchoolTypes.findOne({ school: s.school })
-                .then(result => {
-                    console.log(result);
-                    if (result) {
-                        return res.status(200).json({
-                            schoolTypes: result,
+            if (s) {
+                SchoolTypes.findOne({ school: s.school })
+                    .then(result => {
+                        console.log(result);
+                        if (result) {
+                            return res.status(200).json({
+                                schoolTypes: result,
+                            });
+                        } else {
+                            return res.status(204).json({
+                                message: "No data found!",
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        console.log("err 2");
+                        return res.status(500).json({
+                            error: err,
                         });
-                    } else {
-                        return res.status(204).json({
-                            message: "No data found!",
-                        });
-                    }
-                })
-                .catch(err => {
-                    return res.status(500).json({
-                        error: err,
                     });
+            } else {
+                return res.status(204).json({
+                    error: "No teacher with folowing data~!",
                 });
+            }
         })
         .catch(err => {
+            console.log(err);
+            console.log("err 2");
             return res.status(500).json({
                 error: err,
             });

@@ -21,7 +21,6 @@ const libraryController = require('../controllers/library');
 
 const citiesController = require('../controllers/cities');
 
-
 /*
  * ===================
  *   AUTHORIZATION CHECK
