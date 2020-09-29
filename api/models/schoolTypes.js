@@ -5,14 +5,16 @@ const schoolTypeSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    schools: {
+    school: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "School"
     },
     levels: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Levels"
+            name: {
+                type: String,
+                required: true,
+            },
         }
     ],
     addedAt: {

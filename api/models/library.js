@@ -6,8 +6,18 @@ const librarySchema = mongoose.Schema({
         required: true,
     },
     location: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Location"
+        lat: {
+            type: Number,
+            required: true,
+        },
+        lng: {
+            type: Number,
+            required: true,
+        },
+        city: {
+            type: String,
+            require: true,
+        },
     },
     addedAt: {
         type: String,

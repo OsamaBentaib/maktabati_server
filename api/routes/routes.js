@@ -89,14 +89,6 @@ router.post("/parents/", parentsController.parents_create_parent);
 router.get("/library/", libraryController.libraries_get_all);
 
 router.post("/library/", libraryController.libraries_create_library);
-
-/*
- * ===================
- *   LEVELS ROUTES
- * ===================
- */
-router.post("/levels/", levelsController.levels_create_level);
-
 /*
  * ===================
  *   CITIES ROUTES
