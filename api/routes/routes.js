@@ -44,6 +44,8 @@ router.post("/teacher-create/", checkAuth, teacherController.teachers_create_tea
  */
 router.get("/school-supplies/", checkAuth, schoolSuppliesController.schoolSupplies_get);
 
+router.get("/school-supplies/teacher/:Id/", checkAuth, schoolSuppliesController.schoolSupplies_get_teacher_supp);
+
 router.post("/school-supplies/", checkAuth, schoolSuppliesController.schoolSupplies_create_one);
 
 router.delete("/school-supplies/:Id/", checkAuth, schoolSuppliesController.schoolSupplies_delete_one);

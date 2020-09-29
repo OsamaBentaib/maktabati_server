@@ -44,6 +44,31 @@ exports.schoolSupplies_get = async (req, res, next) => {
         });
 };
 
+
+exports.schoolSupplies_get_teacher_supp = async (req, res, next) => {
+    if (!req.isAuth) {
+        return res.status(401).json({
+            error: "Unauthorizated",
+        });
+    }
+    SchoolSupplies.find({ teacher: req.params.Id })
+        .exec()
+        .then(docs => {
+            res.status(200).json({
+                count: docs.length,
+                schoolSupplies: docs.map(doc => {
+                    return {
+                        schoolSupplies: doc
+                    };
+                })
+            });
+        })
+        .catch(err => {
+            return res.status(500).json({
+                error: "Something wrong!",
+            });
+        });
+};
 exports.schoolSupplies_create_one = async (req, res, next) => {
     if (!req.isAuth) {
         return res.status(401).json({
