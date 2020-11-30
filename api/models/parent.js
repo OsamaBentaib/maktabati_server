@@ -17,6 +17,10 @@ const parentsSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "School"
     },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
     addedAt: {
         type: String,
         require: true,

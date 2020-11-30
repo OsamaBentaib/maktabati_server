@@ -28,6 +28,13 @@ const citiesController = require('../controllers/cities');
  */
 const checkAuth = require('../middleware/check-auth');
 
+// /*
+//  * ===================
+//  *   TEACHER ROUTES
+//  * ===================
+//  */
+// router.post("/teacher-access/", teacherController.teacher_access);
+
 /*
  * ===================
  *   TEACHER ROUTES

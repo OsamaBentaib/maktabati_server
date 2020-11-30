@@ -19,6 +19,10 @@ const librarySchema = mongoose.Schema({
             require: true,
         },
     },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
     addedAt: {
         type: String,
         require: true,

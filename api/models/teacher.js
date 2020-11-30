@@ -10,6 +10,10 @@ const teacherSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
     joinedAt: {
         type: String,
         require: true,
